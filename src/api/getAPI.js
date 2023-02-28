@@ -7,3 +7,4 @@ const getAPI = async (searchQuery) => {
 };
 
 export const searchForShow = (query) => getAPI(`/search/shows?q=${query}`);
+export const searchForPeople = (query) => getAPI(`/search/people?q=${query}`);
