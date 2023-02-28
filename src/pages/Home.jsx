@@ -1,32 +1,23 @@
 import { useState } from 'react';
 import { searchForPeople, searchForShow } from '../api/getAPI';
+import SearchForm from '../components/SearchForm';
 
 const Home = () => {
-  const [searchStr, setSerachStr] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
-  const [searchOption, setSearchOption] = useState('shows');
 
-  const onSearchInputChange = (e) => {
-    setSerachStr(e.target.value);
-  };
-
-  const onRadioButtonChange = (e) => {
-    setSearchOption(e.target.value);
-  };
-
-  const onSearch = async (e) => {
-    e.preventDefault();
+  const onSearch = async ({ q, searchOption }) => {
     try {
       setApiDataError(null);
 
+      let result;
+
       if (searchOption === 'shows') {
-        const result = await searchForShow(searchStr);
-        setApiData(result);
+        result = await searchForShow(q);
       } else {
-        const result = await searchForPeople(searchStr);
-        setApiData(result);
+        result = await searchForPeople(q);
       }
+      setApiData(result);
     } catch (error) {
       setApiDataError(error);
     }
@@ -46,31 +37,7 @@ const Home = () => {
   };
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <input type='text' onChange={onSearchInputChange} value={searchStr} />
-        <label>
-          Shows
-          <input
-            type='radio'
-            name='search-option'
-            value='shows'
-            checked={searchOption === 'shows'}
-            onChange={onRadioButtonChange}
-          />
-        </label>
-
-        <label>
-          Actors
-          <input
-            type='radio'
-            name='search-option'
-            value='actors'
-            checked={searchOption === 'actors'}
-            onChange={onRadioButtonChange}
-          />
-        </label>
-        <button type='submit'>Search</button>
-      </form>
+      <SearchForm onSearch={onSearch} />
 
       <div>{renderApi()}</div>
     </div>
