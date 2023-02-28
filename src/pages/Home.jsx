@@ -1,17 +1,37 @@
 import { useState } from 'react';
+import { searchForShow } from '../api/getAPI';
 
 const Home = () => {
   const [searchStr, setSerachStr] = useState('');
+  const [apiData, setApiData] = useState(null);
+  const [apiDataError, setApiDataError] = useState(null);
+
+  console.log(apiDataError);
+
   const onSearchInputChange = (e) => {
     setSerachStr(e.target.value);
   };
+
   const onSearch = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      `https://api.tvmaze.com/search/shows?q=${searchStr}`
-    );
-    const body = await response.json();
-    console.log(body);
+    try {
+      setApiDataError(null);
+      const result = await searchForShow(searchStr);
+      setApiData(result);
+    } catch (error) {
+      setApiDataError(error);
+    }
+  };
+
+  const renderApi = () => {
+    if (apiDataError) return <div>Error Occured: {apiDataError.message}</div>;
+    if (apiData) {
+      return apiData.map((data) => (
+        <div key={data.show.id}>{data.show.name}</div>
+      ));
+    }
+
+    return null;
   };
   return (
     <div>
@@ -19,6 +39,7 @@ const Home = () => {
         <input type='text' onChange={onSearchInputChange} value={searchStr} />
         <button type='submit'>Search</button>
       </form>
+      <div>{renderApi()}</div>
     </div>
   );
 };
