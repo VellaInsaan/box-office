@@ -4,7 +4,6 @@ import ShowCard from './ShowCard';
 const ShowGrid = ({ shows }) => {
   return (
     <div>
-      {console.log(shows)}
       {shows.map((data) => (
         <ShowCard
           key={data.show.id}
