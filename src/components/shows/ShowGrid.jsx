@@ -12,7 +12,7 @@ const ShowGrid = ({ shows }) => {
           id={data.show.id}
           summary={data.show.summary}
           image={
-            data.show.image ? data.show.image.medium : '/img-not-found.png'
+            data.show.image ? data.show.image.medium : '/img-not-found.jpg '
           }
         />
       ))}
