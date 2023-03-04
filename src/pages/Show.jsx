@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/getAPI';
 
-const Show = () => {
-  const { showId } = useParams();
+const useShowById = (showId) => {
   const [data, setData] = useState(null);
   const [catchError, setCatchError] = useState(null);
 
@@ -18,6 +17,13 @@ const Show = () => {
     }
     fetchData();
   }, [showId]);
+  return { data, catchError };
+};
+
+const Show = () => {
+  const { showId } = useParams();
+
+  const { data, catchError } = useShowById(showId);
 
   if (data) {
     return <div>Got data: {data.name}</div>;
