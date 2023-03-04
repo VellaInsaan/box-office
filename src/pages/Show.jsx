@@ -1,35 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/getAPI';
-
-const useShowById = (showId) => {
-  const [data, setData] = useState(null);
-  const [catchError, setCatchError] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getShowById(showId);
-        setData(data);
-      } catch (error) {
-        setCatchError(error);
-      }
-    }
-    fetchData();
-  }, [showId]);
-  return { data, catchError };
-};
 
 const Show = () => {
   const { showId } = useParams();
 
-  const { data, catchError } = useShowById(showId);
+  const { data: showData, error: showError } = useQuery({
+    queryKey: ['show', showId],
+    queryFn: () => getShowById(showId),
+  });
+  // const { data, catchError } = useShowById(showId);
 
-  if (data) {
-    return <div>Got data: {data.name}</div>;
+  if (showData) {
+    return <div>Got data: {showData.name}</div>;
   }
-  if (catchError) {
-    return <div>Error getting data: {catchError.message}</div>;
+  if (showError) {
+    return <div>Error getting data: {showError.message}</div>;
   }
 
   return <div>Data is loading</div>;
