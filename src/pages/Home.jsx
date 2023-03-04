@@ -14,7 +14,7 @@ const Home = () => {
       filter.searchOption === 'shows'
         ? searchForShow(filter.q)
         : searchForPeople(filter.q),
-    // ⬇️ disabled as long as the filter is empty
+
     enabled: !!filter,
     refetchOnWindowFocus: false,
   });
