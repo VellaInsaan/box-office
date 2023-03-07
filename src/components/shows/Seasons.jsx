@@ -11,9 +11,7 @@ const Seasons = ({ seasons }) => {
         {seasons.map((season) => (
           <div>
             <p>Season {season.number}</p>
-            <p>
-              Episodes ={'>'} {season.episodeOrder}
-            </p>
+            <p>Episodes : {season.episodeOrder}</p>
             <div>
               Aired : {season.premiereDate} - {season.endDate}
             </div>

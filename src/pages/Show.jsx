@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getShowById } from '../api/getAPI';
 import Cast from '../components/shows/Cast';
 import Details from '../components/shows/Details';
@@ -14,11 +14,11 @@ const Show = () => {
     queryFn: () => getShowById(showId),
     refetchOnWindowFocus: false,
   });
-  // const { data, catchError } = useShowById(showId);
 
   if (showData) {
     return (
       <div>
+        <Link to='/'>Go to Home</Link>
         <ShowMainData
           image={showData.image}
           name={showData.name}
@@ -26,7 +26,6 @@ const Show = () => {
           summary={showData.summary}
           genres={showData.genres}
         />
-
         <div>
           <h2>Details</h2>
           <Details
@@ -35,12 +34,10 @@ const Show = () => {
             premiered={showData.premiered}
           />
         </div>
-
         <div>
           <h2>Seasons</h2>
           <Seasons seasons={showData._embedded.seasons} />
         </div>
-
         <div>
           <h2>Cast</h2>
           <Cast cast={showData._embedded.cast} />
