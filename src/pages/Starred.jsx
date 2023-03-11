@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getShowsByIds } from '../api/getAPI';
 import { useStarredShow } from '../lib/useStarred';
 import ShowGrid from '../components/shows/ShowGrid';
+import { TextCenter } from '../components/common/TextCenter';
 
 const Starred = () => {
   const [starredShowsIds] = useStarredShow();
@@ -19,13 +20,13 @@ const Starred = () => {
     return <ShowGrid shows={starredShows} />;
   }
   if (starredShows?.length === 0) {
-    return <div>No Shows Starred</div>;
+    return <TextCenter>No Shows Starred</TextCenter>;
   }
   if (starredShowsErr) {
-    return <div>Error Occured</div>;
+    return <TextCenter>Error Occured</TextCenter>;
   }
 
-  return <div>Loading ...</div>;
+  return <TextCenter>Loading ...</TextCenter>;
 };
 
 export default Starred;

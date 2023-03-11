@@ -4,6 +4,7 @@ import { searchForPeople, searchForShow } from '../api/getAPI';
 import ActorGrid from '../components/actors/ActorGrid';
 import SearchForm from '../components/SearchForm';
 import ShowGrid from '../components/shows/ShowGrid';
+import { TextCenter } from '../components/common/TextCenter';
 
 const Home = () => {
   const [filter, setFilter] = useState(null);
@@ -27,10 +28,11 @@ const Home = () => {
   };
 
   const renderApi = () => {
-    if (apiDataError) return <div>Error Occured: {apiDataError.message}</div>;
+    if (apiDataError)
+      return <TextCenter>Error Occured: {apiDataError.message}</TextCenter>;
 
     if (apiData?.length === 0) {
-      return <div>No results found</div>;
+      return <TextCenter>No results found</TextCenter>;
     }
 
     if (apiData) {
